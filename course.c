@@ -2,22 +2,62 @@
 
 // Simplicity is always great. :)
 
+#define LINE_SIZE 64
+
 int main(int argc, char *argv[])
 {
 	system("cls");
 	
-	if((strcmp(argv[2], "-i") == 0) && (strcmp(argv[4], "-o") == 0))
+	char *ifile;
+	char *ofile;
+	
+	char *strToFind = argv[1];
+	
+	int caseMatter = 0; // 1 - case specific, 0 - case ignore
+	
+	for(int i = 0; i < argc; i++)
 	{
-		// Create Files struct pointer and allocate memory for it
-		struct Files *filez = Files_Create(argv[3], argv[5], 64);
+		if(strstr(argv[i], "-i"))
+		{
+			printf("\n%d\n", i);
+			//ifile = malloc(sizeof(char*));
+			if(argv[i+1])
+			{
+				ifile = (strstr(argv[i+1],".txt")) ? argv[i+1] : "";
+			}
+			else
+				ifile = argv[i+1] = "";
+			printf("%s ", ifile);
+		}
 		
-		Operate_Files_Actions(filez, argv[1]); // str_word input_file output_file
+		if(strstr(argv[i], "-o"))
+		{
+			printf("\n%d\n", i);
+			if(argv[i+1])
+			{
+				ofile = (strstr(argv[i+1],".txt")) ? argv[i+1] : "";
+			}
+			else
+				ofile = argv[i+1] = "";
+			printf("%s", ofile);
+		}
 		
-		/* * Free Heap of allocated memory * !!! VERY IMPORTANT as Kevin says :) !!! * ELSE We get MEMORY LEAK */
-		Files_Destroy(filez);
+		if(strstr(argv[i], "-c"))
+		{
+			printf("\n%d\n", i);
+		}
+		else
+			printf("\n%d\n", i);
 	}
-	else
-		printf("WRONG COMMAND!");
+	
+	// Create Files struct pointer and allocate memory for it
+	struct Files *filez = Files_Create(ifile, ofile, 64);
+	
+	//
+	Operate_Files_Actions(filez, strToFind); // str_word input_file output_file
+
+	/* Free Heap of allocated memory * !!! VERY IMPORTANT as Kevin says :) !!! * ELSE We get MEMORY LEAK */
+	Files_Destroy(filez);
 
     // design matters :)
     printf("\n");

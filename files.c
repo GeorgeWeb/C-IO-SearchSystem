@@ -28,6 +28,16 @@ void Close(FILE *fh)
 	fclose(fh);
 }
 
+char* ToLower_Case(char* a)
+{
+    char *b = malloc(strlen(a));
+    for (int i = 0; i < strlen(a); i++)
+    {
+        b[i] = tolower(a[i]);   
+    }
+    return b;
+}
+
 void Read_Std(char *line, size_t sz)
 {	
 	// Read from stdout	
@@ -64,7 +74,7 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 		
 		while(fgets(line, m_File->line_size, ifh) != NULL)
 		{
-			if(strstr(line, word) != NULL)
+			if(strstr(line, word) != NULL) 
 			{
 				printf("\nA match found on line %d: %s\n", line_num, word);
 				find_result++;
@@ -79,7 +89,7 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 					Write_Std(word);
 				}
 			}
-			line_num++;
+			line_num++;		
 		}
 		
 		if(find_result == 0)
@@ -122,7 +132,7 @@ void Operate_Files_Actions(struct Files *m_File, char *word)
     // Open input source
     ifh = fopen(m_File->input_source, "r");
 	// Open output source
-	ofh = fopen(m_File->output_source, "r+");
+	ofh = fopen(m_File->output_source, "a+");
 	
 	size_t sz = 64;
 	
@@ -131,7 +141,9 @@ void Operate_Files_Actions(struct Files *m_File, char *word)
 	
 	Search_File(ifh, ofh, m_File, line, word, str, sz);
 	
+	assert(line != NULL);
 	free(line);
+	assert(str != NULL);
 	free(str);
 	
 	// Check if any of the files is still opened -> CLOSE
