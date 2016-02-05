@@ -60,8 +60,7 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 	
 	if(ifh)
 	{
-		//Read_Std(str, str_size);
-		printf("\nI start!\n");
+		printf("\nI just started, pal! (:\n");
 
 		while(fgets(line, m_File->line_size, ifh) != NULL)
 		{

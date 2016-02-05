@@ -16,13 +16,12 @@ int main(int argc, char *argv[])
 	int caseMatter; // 1 - case specific, 0 - case ignore
 	
 	ifile = malloc(sizeof(char*) * 100);
-	ifile = malloc(sizeof(char*) * 100);
+	ofile = malloc(sizeof(char*) * 100);
 	
 	for(int i = 0; i < argc; i++)
 	{
 		if(strstr(argv[i], "-i"))
 		{
-			printf("\n%d\n", i);		
 			if(argv[i+1])
 			{
 				ifile = (strstr(argv[i+1],".txt")) ? argv[i+1] : "";
@@ -33,8 +32,7 @@ int main(int argc, char *argv[])
 		}
 		
 		if(strstr(argv[i], "-o"))
-		{
-			printf("\n%d\n", i);
+		{			
 			if(argv[i+1])
 			{
 				ofile = (strstr(argv[i+1],".txt")) ? argv[i+1] : "";
@@ -47,12 +45,11 @@ int main(int argc, char *argv[])
 		if(strstr(argv[i], "-c"))
 		{
 			caseMatter = 0;
-			printf("\n%d\n", i);
 		}
 	}
 	
 	// Create Files struct pointer and allocate memory for it
-	struct Files *filez = Files_Create(ifile, ofile, 64, caseMatter);
+	struct Files *filez = Files_Create(ifile, ofile, LINE_SIZE, caseMatter);
 	
 	//
 	Operate_Files_Actions(filez, strToFind); // str_word input_file output_file
