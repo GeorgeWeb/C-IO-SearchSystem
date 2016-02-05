@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	
 	char *strToFind = argv[1];
 	
-	int caseMatter = 0; // 1 - case specific, 0 - case ignore
+	int caseMatter; // 1 - case specific, 0 - case ignore
 	
 	for(int i = 0; i < argc; i++)
 	{
@@ -44,14 +44,13 @@ int main(int argc, char *argv[])
 		
 		if(strstr(argv[i], "-c"))
 		{
+			caseMatter = 0;
 			printf("\n%d\n", i);
 		}
-		else
-			printf("\n%d\n", i);
 	}
 	
 	// Create Files struct pointer and allocate memory for it
-	struct Files *filez = Files_Create(ifile, ofile, 64);
+	struct Files *filez = Files_Create(ifile, ofile, 64, caseMatter);
 	
 	//
 	Operate_Files_Actions(filez, strToFind); // str_word input_file output_file

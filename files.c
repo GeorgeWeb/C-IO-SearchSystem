@@ -1,7 +1,7 @@
 #include "files.h"
 
 // Create Files pointer and allocate memory
-struct Files *Files_Create(char *input_source, char *output_source, int line_size)
+struct Files *Files_Create(char *input_source, char *output_source, size_t line_size, int caseMatter)
 {
     struct Files *m_File = malloc(sizeof(struct Files));
     assert(m_File != NULL);
@@ -9,7 +9,8 @@ struct Files *Files_Create(char *input_source, char *output_source, int line_siz
     m_File->input_source = input_source;
 	m_File->output_source = output_source;
     m_File->line_size = line_size;
-
+	m_File->caseMatter = caseMatter;
+	
     return m_File;
 };
 
@@ -26,16 +27,6 @@ void Files_Destroy(struct Files *m_File)
 void Close(FILE *fh)
 {
 	fclose(fh);
-}
-
-char* ToLower_Case(char* a)
-{
-    char *b = malloc(strlen(a));
-    for (int i = 0; i < strlen(a); i++)
-    {
-        b[i] = tolower(a[i]);   
-    }
-    return b;
 }
 
 void Read_Std(char *line, size_t sz)
@@ -59,7 +50,7 @@ void Write_File(FILE *ofh, char *line)
 	fprintf(ofh, "%s\n", line);
 }
 
-void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *word, char *str, size_t str_size)
+void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *word, char *str, size_t str_size, int caseMatter)
 {
 	// Read the file line by line (untill it reaches max chars for line_size)	
 	
@@ -71,9 +62,15 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 	{
 		//Read_Std(str, str_size);
 		printf("\nI start!\n");
-		
+
 		while(fgets(line, m_File->line_size, ifh) != NULL)
 		{
+			if(caseMatter == 0)
+			{
+				line = strlwr(line);
+				word = strlwr(word);
+			}
+			
 			if(strstr(line, word) != NULL) 
 			{
 				printf("\nA match found on line %d: %s\n", line_num, word);
@@ -89,6 +86,7 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 					Write_Std(word);
 				}
 			}
+			
 			line_num++;		
 		}
 		
@@ -139,7 +137,7 @@ void Operate_Files_Actions(struct Files *m_File, char *word)
 	char *str = malloc(sizeof(char*) * sz);
 	char *line = malloc(m_File->line_size);
 	
-	Search_File(ifh, ofh, m_File, line, word, str, sz);
+	Search_File(ifh, ofh, m_File, line, word, str, sz, m_File->caseMatter);
 	
 	assert(line != NULL);
 	free(line);
