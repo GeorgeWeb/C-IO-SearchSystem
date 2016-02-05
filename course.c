@@ -15,12 +15,14 @@ int main(int argc, char *argv[])
 	
 	int caseMatter; // 1 - case specific, 0 - case ignore
 	
+	ifile = malloc(sizeof(char*) * 100);
+	ifile = malloc(sizeof(char*) * 100);
+	
 	for(int i = 0; i < argc; i++)
 	{
 		if(strstr(argv[i], "-i"))
 		{
-			printf("\n%d\n", i);
-			//ifile = malloc(sizeof(char*));
+			printf("\n%d\n", i);		
 			if(argv[i+1])
 			{
 				ifile = (strstr(argv[i+1],".txt")) ? argv[i+1] : "";
@@ -60,6 +62,7 @@ int main(int argc, char *argv[])
 
     // design matters :)
     printf("\n");
-
+	
+	
     return 0;
 }
