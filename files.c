@@ -1,7 +1,7 @@
 #include "files.h"
 
 // Create Files pointer and allocate memory
-struct Files *Files_Create(char *input_source, char *output_source, size_t line_size, int caseMatter)
+struct Files *Files_Create(char *input_source, char *output_source, size_t line_size, int case_ignore)
 {
     struct Files *m_File = malloc(sizeof(struct Files));
     assert(m_File != NULL);
@@ -9,7 +9,7 @@ struct Files *Files_Create(char *input_source, char *output_source, size_t line_
     m_File->input_source = input_source;
 	m_File->output_source = output_source;
     m_File->line_size = line_size;
-	m_File->caseMatter = caseMatter;
+	m_File->case_ignore = case_ignore;
 	
     return m_File;
 };
@@ -50,7 +50,7 @@ void Write_File(FILE *ofh, char *line)
 	fprintf(ofh, "%s\n", line);
 }
 
-void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *word, char *str, size_t str_size, int caseMatter)
+void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *word, char *str, size_t str_size, int case_ignore)
 {
 	// Read the file line by line (untill it reaches max chars for line_size)	
 	
@@ -64,7 +64,7 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 
 		while(fgets(line, m_File->line_size, ifh) != NULL)
 		{
-			if(caseMatter == 0)
+			if(case_ignore == 1)
 			{
 				line = strlwr(line);
 				word = strlwr(word);
@@ -136,7 +136,7 @@ void Operate_Files_Actions(struct Files *m_File, char *word)
 	char *str = malloc(sizeof(char*) * sz);
 	char *line = malloc(m_File->line_size);
 	
-	Search_File(ifh, ofh, m_File, line, word, str, sz, m_File->caseMatter);
+	Search_File(ifh, ofh, m_File, line, word, str, sz, m_File->case_ignore);
 	
 	assert(line != NULL);
 	free(line);
