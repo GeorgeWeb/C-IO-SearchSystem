@@ -1,0 +1,6 @@
+Rosette of Pliska is Turn-based Strategy game filled with rich story dating back to medieval fantasy times, where magic was primal and sacrificial rituals were made in order to please the mystical forces.
+There are different kinds beliefs in magic. Shamanism, Druidism, Dark magic, Voodoo were the main beliefs.
+But once a druid from the town of Pliska decided to oppose against the human sacrifices.
+However, the most powerful wielders of the other forces decided to destroy him.
+In this turn-based game you use the natural powers of runes to counter the powerful spells of the casters, determined to destroy your town or remove all belief in your power.
+The battle awaits...

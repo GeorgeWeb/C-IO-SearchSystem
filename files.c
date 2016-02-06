@@ -70,22 +70,20 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 	// if any value for input source file
 	if(ifh)
 	{
-		printf("\nI just started, pal! (:\n");
+		printf("I just started, pal! (:\n");
+		printf("Type help/HELP in the console for a guide on how to use the program (:\n\n\n");
 
 		while(fgets(line, m_File->line_size, ifh) != NULL)
 		{
 			// that integer we use as boolean by the way cuz' I don't wanna botter including additional lib for that...
 			// if it equals 1 it means we wanna ignore any type of case differences -> so we just set them all to lower case
 			// otherwise we Do care!
-			if(case_ignore == 1)
-			{
-				line = strlwr(line);
-				word = strlwr(word);
-			}
+			line = (case_ignore == 1) ? strlwr(line) : line;
+			word = (case_ignore == 1) ? strlwr(word) : word;
 			// compare file lines with the string we've entered
 			if(strstr(line, word) != NULL) 
 			{
-				printf("\nA match for the string \"%s\" was found on line %d\nHere's it: %s\n", word, line_num, line);
+				printf("A match for the string \"%s\" was found on line %d\nHere's it: %s\n", word, line_num, line);
 				find_result++;
 				
 				// Write line to output file source
