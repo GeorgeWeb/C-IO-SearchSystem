@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 
 #ifndef SIZE
@@ -65,25 +66,34 @@ int main(int argc, char **argv)
 				printf("you are not aware of the type of case letters in your string.\n");
 				printf("I hope that was enough informative... (:\n");
 				printf("-------------------------------------------------------------\n\n\n");
+				// Free the Heap. Get rid of out in the mem...
+				assert(out != NULL);			
+				free(out);
 				break;
 			case EXAMPLES:
 				printf("-------------------------------------------------------------\n");
 				printf("Examples...\n\n");
 				printf("eg 0: find mystring -i filename -o filename\n");
 				printf("eg 1: find mystring -i filename -o filename -c\n");
-				printf("eg 2: find \"mystring1 mystringN\" -i filename -o filename\n");
 				printf("(use commas if the string contains is formed of more phrases)\n");
+				printf("eg 2: find \"mystring1 mystringN\" -i filename -o filename\n");
 				printf("eg 3: find \"mystring1 mystringN\" -i filename -o filename -c\n");
 				printf("eg 4: find mystring -i filename -o\n");
 				printf("eg 5: find mystring -i filename -o -c\n");
-				printf("eg 6: find mystring -i -o\n");
-				// The following one can be typed but isn't really a legit one cuz' you don't search in a file anymore
-				// printf("eg 7: find mystring -i -o -c\n");
+				printf("eg 6: find mystring -i filename\n");
+				printf("eg 7: find mystring -o filename\n");
+				printf("eg 8: find mystring\n");
 				printf("I hope you got these, pal. No go type 'em! ;)... (:\n");
 				printf("-------------------------------------------------------------\n\n\n");
+				// Free the Heap. Get rid of out in the mem...
+				assert(out != NULL);			
+				free(out);
 				break;
 			default:
 				printf("*** (Invalid Input)*TryAgain ***\n\n\n");
+				// Free the Heap. Get rid of out in the mem...
+				assert(out != NULL);			
+				free(out);
 				break;
 		}
 	}

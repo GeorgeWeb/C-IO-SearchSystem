@@ -47,7 +47,8 @@ void Read_Std(char *line, size_t sz)
 void Write_Std(char *line)
 {
 	printf("\nSuch output source doesn't exist. Sorry mate. :)\nWe will try to handle this situation in a few.\n");
-	printf("\nBut hey, that's your string, pal: %s", line);
+	printf("\nBut hey, that's your outcome, pal: %s", line);
+	printf("-----------------------------\n");
 }
 
 // Write line(s) to file
@@ -67,12 +68,15 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 	static int find_result = 0;	
 	static int is_saved = 0;
 	
+	
+	printf("-----------------------------\n");
+	printf("I just started, pal! (:\n");
+	printf("Type help/HELP in the console for a guide on how to use the program. (:\n");
+	printf("Type clear/CLEAR in order to clean the console. (:\n\n\n");
+	
 	// if any value for input source file
 	if(ifh)
 	{
-		printf("I just started, pal! (:\n");
-		printf("Type help/HELP in the console for a guide on how to use the program (:\n\n\n");
-
 		while(fgets(line, m_File->line_size, ifh) != NULL)
 		{
 			// that integer we use as boolean by the way cuz' I don't wanna botter including additional lib for that...
@@ -84,7 +88,6 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 			if(strstr(line, word) != NULL) 
 			{
 				printf("A match for the string \"%s\" was found on line %d\nHere's it: %s\n", word, line_num, line);
-				find_result++;
 				
 				// Write line to output file source
 				if(ofh)
@@ -94,10 +97,9 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 				}
 				// Write line to stdout
 				else
-				{
-					printf("\nA match for the string \"%s\" was found on line %d\nHere's it: %s\n", word, line_num, line);
 					Write_Std(line);
-				}
+				
+				find_result++;
 			}
 			// increment the line number so we continue with the search until the END. (:
 			line_num++;		
@@ -106,7 +108,8 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 		// Just for design matters and informativity(if such word exists :D)
 		if(find_result == 0)
 		{
-			printf("\nSorry, couldn't find a match for %s.\n", word);
+			printf("\nSorry, couldn't find a match for \"%s\" but you can always try again. (:.\n", word);
+			printf("-----------------------------\n");
 		} 
 		printf("\nTotal matches found: %d\n", find_result);
 	}
@@ -118,7 +121,6 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 		{
 			printf("Such input source doesn't exist. Sorry mate. :)\nBut you can enter now what you wanna add in the output source.\n");
 			Read_Std(str, str_size);
-			printf("%s", str);
 			Write_File(ofh, str);
 			is_saved = 1;
 		}
@@ -133,7 +135,10 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 	
 	// Just show user that you've saved the found string in an output file
 	if(is_saved == 1)
+	{
 		printf("\n(Saved in output file)\n");
+		printf("-----------------------------\n");
+	}
 }
 
 // Open and read the file -> Ouput Lines

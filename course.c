@@ -9,12 +9,7 @@
 #endif
 
 int main(int argc, char **argv)
-{
-	/** cuz' design matters (: + my eyes can't handle all the text displayed there.
-	  * Not really important line at all but.. (:
-	*/
-	system("cls"); // I know that the use of system is a bad practice but the thing is that I only use it for such small programs.
-	
+{	
 	// Playin' around with args size in order to achieve full functionality and informativity of the program
 	if(argc < 2)
 	{
@@ -27,14 +22,10 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		// initialize file sources AND allocate some mem for these 2 :)
-		char *ifile = malloc(sizeof(char*) * 128); // hope it is enough for a filename
-		char *ofile = malloc(sizeof(char*) * 128); // hope it is enough for a filename
-		
-		// assign.. nothing to them (make them empty strings)
-		ifile = "";
-		ofile = "";
-		
+		// initialize file sources AND assign.. nothing to them (make them empty strings)
+		char *ifile = "";
+		char *ofile = "";
+
 		// initialize string to search and assign its value to console argument
 		char *strToFind = argv[1];
 		

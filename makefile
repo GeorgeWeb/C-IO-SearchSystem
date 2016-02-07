@@ -5,12 +5,17 @@ clean:
 	find.exe
 	help.obj
 	help.exe
+	clear.obj
+	clear.exe
 #Building our program/s
 find:
 #...building the find tool
 	cl /Fe:find.exe files.c course.c
-#...building my support app that guides you in how to use the find tool
+#...building a helper - my support app that guides you in how to use the find tool
 	cl /Fe:help.exe help.c
-#Default/Example command to be executed right after build using our find tool functionality
+#...building another helper - clear tool, so we can clean the console at some point if it gets too filled...
+	cl /Fe:clear.exe clear.c
+#Default/Example command(s) to be executed right after build using our find tool functionality
+	find hello -i input.txt -o output.txt
 	find hello -i input.txt -o output.txt -c
 #ENJOY (:
