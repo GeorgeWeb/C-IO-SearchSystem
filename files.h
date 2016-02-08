@@ -7,8 +7,6 @@
 // Standarts...
 #include <stdio.h>
 #include <stdlib.h>
-// to capture programming errors :)
-#include <assert.h>
 // to let us do some String work (:
 #include <string.h>
 

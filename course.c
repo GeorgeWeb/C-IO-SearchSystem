@@ -8,6 +8,11 @@
 #define LINE_SIZE 256
 #endif
 
+/**
+  * PLEASE, I need a Destructive feedback on the whole thing!
+  * I know it will take time but will also give me a better understanding on what should I improve in my aproaches etc.
+**/
+
 int main(int argc, char **argv)
 {	
 	// Playin' around with args size in order to achieve full functionality and informativity of the program

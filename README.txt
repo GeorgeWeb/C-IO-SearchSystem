@@ -1,4 +1,4 @@
-The MAKEFILE does a few commands for you using the Microsoft Compiler:
+The MAKEFILE does a few commands for you using the Microsoft Compiler(clang-cl):
 -> Making sure that we are clear from any leftovers from previious builds with the clean: command
 	- clean:
 		find.obj

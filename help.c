@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
 #ifndef SIZE
 #define SIZE 10 // it should actualy be 3
@@ -54,8 +53,8 @@ int main(int argc, char **argv)
 				// exit the loop (:
 				flag = 0;
 				// Free the Heap. Get rid of out in the mem...
-				assert(out != NULL);			
 				free(out);
+				out = 0;
 				break;
 			case INFORMATION:
 				printf("|------------------------------------------------------------\n");
@@ -67,8 +66,8 @@ int main(int argc, char **argv)
 				printf("I hope that was enough informative... (:\n");
 				printf("-------------------------------------------------------------\n\n\n");
 				// Free the Heap. Get rid of out in the mem...
-				assert(out != NULL);			
 				free(out);
+				out = 0;
 				break;
 			case EXAMPLES:
 				printf("-------------------------------------------------------------\n");
@@ -86,14 +85,14 @@ int main(int argc, char **argv)
 				printf("I hope you got these, pal. No go type 'em! ;)... (:\n");
 				printf("-------------------------------------------------------------\n\n\n");
 				// Free the Heap. Get rid of out in the mem...
-				assert(out != NULL);			
 				free(out);
+				out = 0;
 				break;
 			default:
 				printf("*** (Invalid Input)*TryAgain ***\n\n\n");
 				// Free the Heap. Get rid of out in the mem...
-				assert(out != NULL);			
 				free(out);
+				out = 0;
 				break;
 		}
 	}

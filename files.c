@@ -6,9 +6,6 @@ struct Files *Files_Create(char *input_source, char *output_source, size_t line_
 {	
 	// Just allocate some memory for that struct that we will free when our program finishes its job.
     struct Files *m_File = malloc(sizeof(struct Files));
-    
-	// That's here in order to capture any errors during the debugging phase
-	assert(m_File != NULL);
 	
 	// I don't feel like I should comment these... so I'll move on
     m_File->input_source = input_source;
@@ -23,11 +20,9 @@ struct Files *Files_Create(char *input_source, char *output_source, size_t line_
 // Destroy Files pointer and free allocated memory
 void Files_Destroy(struct Files *m_File)
 {
-    // That's here in order to capture any errors during the debugging phase
-    assert(m_File != NULL);
-
     // Free heap memory (:
     free(m_File);
+	m_File = 0;
 }
 
 // Simply close a file stream! :))
@@ -156,17 +151,17 @@ void Operate_Files_Actions(struct Files *m_File, char *word)
 	size_t sz = 256;
 	
 	char *str = malloc(sizeof(char*) * sz);
-	char *line = malloc(m_File->line_size);
+	char *line = malloc(sizeof(char*) * m_File->line_size);
 	
 	Search_File(ifh, ofh, m_File, line, word, str, sz, m_File->case_ignore);
 	
-	// Just in case (usin' assert) -> free the stuff as usual... (:
+	// Free the stuff as usual... (:
 	// Ok, that's not a legit second part of the above comment.
 	// Do free the memory allocated for every file's line and that for the string we are searching for!
-	assert(line != NULL);
 	free(line);
-	assert(str != NULL);
 	free(str);
+	line = 0;
+	str = 0;
 	
 	// Check if any of the files is still opened -> CLOSE
 	if(ifh)
