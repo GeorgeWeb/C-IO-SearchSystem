@@ -2,12 +2,14 @@
 #ifndef FILES_HGUARD
 #define FILES_HGUARD
 
-// Including all the libraries we need... 
+// Preproccessor definitions...
+#ifndef LINE_SIZE
+#define LINE_SIZE 256
+#endif
 
-// Standarts...
+// Including all the libs we need... 
 #include <stdio.h>
 #include <stdlib.h>
-// to let us do some String work (:
 #include <string.h>
 
 // Struct datatypes declaration

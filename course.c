@@ -3,8 +3,10 @@
 // Simplicity is always great. (: Most of the time.. :D
 
 // Define some size of the line/word/phrase/string(whatever) to be allocated later on
-#ifndef LINE_SIZE
-#define LINE_SIZE 256
+#ifdef LINE_SIZE // Very bad name, not long enough, too general, etc..
+  static const int line_sz = LINE_SIZE;
+#else
+  static const int line_sz = 256; // default value
 #endif
 
 /**
@@ -15,11 +17,11 @@
 int main(int argc, char **argv)
 {	
 	// initialize file sources AND assign.. nothing to them (make them empty strings)
-	char *ifile = (char*)malloc(sizeof(char*) * LINE_SIZE);
-	char *ofile = (char*)malloc(sizeof(char*) * LINE_SIZE);
+	char *ifile = (char*)malloc(sizeof(char*) * line_sz);
+	char *ofile = (char*)malloc(sizeof(char*) * line_sz);
 	
 	// initialize string to search and assign its value to console argument
-	char *strToFind = (char*)malloc(sizeof(char) * LINE_SIZE);
+	char *strToFind = (char*)malloc(sizeof(char) * line_sz);
 	
 	// 1 - case ignore, everything else - case specific
 	int case_ignore;
@@ -78,7 +80,7 @@ int main(int argc, char **argv)
 		}
 		
 		// Create Files struct pointer and allocate memory for it
-		struct Files *filez = Files_Create(ifile, ofile, LINE_SIZE, case_ignore);
+		struct Files *filez = Files_Create(ifile, ofile, line_sz, case_ignore);
 		
 		// Handle all the operations like searching, comparing, writing(file, stdin) etc.
 		Operate_Files_Actions(filez, strToFind); // str_word input_file output_file
