@@ -5,7 +5,7 @@
 struct Files *Files_Create(char *input_source, char *output_source, size_t line_size, int case_ignore)
 {	
 	// Just allocate some memory for that struct that we will free when our program finishes its job.
-    struct Files *m_File = malloc(sizeof(struct Files));
+    struct Files *m_File = (struct Files*)malloc(sizeof(struct Files));
 	
 	// I don't feel like I should comment these... so I'll move on
     m_File->input_source = input_source;
@@ -50,7 +50,7 @@ void Write_Std(char *line)
 void Write_File(FILE *ofh, char *line)
 {
 	// Writefile...	
-	fprintf(ofh, "%s\n", line);
+	fprintf(ofh, "%s", line); // "a+" should automatically put a new line in the end and append the string on it.
 }
 
 // Search the file for the string entered in the console program's arguments
@@ -58,7 +58,7 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 {
 	// Read the file line by line (untill it reaches max chars for line_size)	
 	
-	// These are statics cuz' I don't plan on using them outside THIS scope (:
+	// These are statics cuz' I don't plan on using them outside this scope (:
 	static int line_num = 1;
 	static int find_result = 0;	
 	static int is_saved = 0;
@@ -140,18 +140,14 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 void Operate_Files_Actions(struct Files *m_File, char *word)
 {
 	//  Define file sources to read from and write to
-    FILE *ifh;
-	FILE *ofh;
-    // Open input source
-    ifh = fopen(m_File->input_source, "r");
-	// Open output source
-	ofh = fopen(m_File->output_source, "a+");
+    FILE *ifh = fopen(m_File->input_source, "r");; // Open input source
+	FILE *ofh = fopen(m_File->output_source, "a+");; // Open output source
 	
 	// Define some size that's gonna be used in memory alloc for the word we search for
 	size_t sz = 256;
 	
-	char *str = malloc(sizeof(char*) * sz);
-	char *line = malloc(sizeof(char*) * m_File->line_size);
+	char *str = (char*)malloc(sizeof(char) * sz);
+	char *line = (char*)malloc(sizeof(char) * m_File->line_size);
 	
 	Search_File(ifh, ofh, m_File, line, word, str, sz, m_File->case_ignore);
 	
@@ -159,13 +155,19 @@ void Operate_Files_Actions(struct Files *m_File, char *word)
 	// Ok, that's not a legit second part of the above comment.
 	// Do free the memory allocated for every file's line and that for the string we are searching for!
 	free(line);
-	free(str);
 	line = 0;
+	free(str);
 	str = 0;
 	
 	// Check if any of the files is still opened -> CLOSE
 	if(ifh)
+	{
 		Close(ifh);
+		ifh = 0;
+	}
 	if(ofh)
+	{
 		Close(ofh);
+		ofh = 0;
+	}
 }

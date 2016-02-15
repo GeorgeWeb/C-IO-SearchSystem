@@ -1,6 +1,5 @@
 // Again gettin' that nice hell of a header here (:
 #include "files.h"
-
 // Simplicity is always great. (: Most of the time.. :D
 
 // Define some size of the line/word/phrase/string(whatever) to be allocated later on
@@ -28,11 +27,14 @@ int main(int argc, char **argv)
 	else
 	{
 		// initialize file sources AND assign.. nothing to them (make them empty strings)
-		char *ifile = "";
-		char *ofile = "";
+		char *ifile = (char*)malloc(sizeof(char*) * LINE_SIZE);
+		char *ofile = (char*)malloc(sizeof(char*) * LINE_SIZE);		
+		ifile = "";
+		ofile = "";
 
 		// initialize string to search and assign its value to console argument
-		char *strToFind = argv[1];
+		char *strToFind = (char*)malloc(sizeof(char) * LINE_SIZE);
+		strToFind = argv[1];
 		
 		int case_ignore; // 1 - case ignore, everything else - case specific
 		
@@ -80,6 +82,13 @@ int main(int argc, char **argv)
 
 		/* Free Heap of allocated memory * !!! VERY IMPORTANT as Kevin says :) !!! * ELSE -> We definitely get a MEMORY LEAK */
 		Files_Destroy(filez);
+		// ------
+		ifile = 0;
+		free(ifile);
+		ofile = 0;
+		free(ofile);
+		strToFind = 0;
+		free(strToFind);
 	}
 
     // cuz' design matters (:

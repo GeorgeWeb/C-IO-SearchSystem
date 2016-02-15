@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #ifndef SIZE
-#define SIZE 10 // it should actualy be 3
+// it should actualy be 3 but won't be a problem to allocate a bit more for that particular program,
+// though I know it's important to do your calculations before dynamically allocating any memory(which is what I did) but anyway.. (:
+#define SIZE 10
 #endif
 
 // enum giving names to my ints for the menu "links"/choices :D
@@ -39,7 +40,7 @@ int main(int argc, char **argv)
 		printf("Enter: ");
 		
 		// Read input
-		char *out = malloc(sizeof(char*) * SIZE);
+		char *out = (char*)malloc(sizeof(char) * SIZE);
 		fgets(out, SIZE, stdin);
 
 		// Convert to HELPERS
