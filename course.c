@@ -14,6 +14,16 @@
 
 int main(int argc, char **argv)
 {	
+	// initialize file sources AND assign.. nothing to them (make them empty strings)
+	char *ifile = (char*)malloc(sizeof(char*) * LINE_SIZE);
+	char *ofile = (char*)malloc(sizeof(char*) * LINE_SIZE);
+	
+	// initialize string to search and assign its value to console argument
+	char *strToFind = (char*)malloc(sizeof(char) * LINE_SIZE);
+	
+	// 1 - case ignore, everything else - case specific
+	int case_ignore;
+	
 	// Playin' around with args size in order to achieve full functionality and informativity of the program
 	if(argc < 2)
 	{
@@ -26,17 +36,10 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		// initialize file sources AND assign.. nothing to them (make them empty strings)
-		char *ifile = (char*)malloc(sizeof(char*) * LINE_SIZE);
-		char *ofile = (char*)malloc(sizeof(char*) * LINE_SIZE);		
 		ifile = "";
 		ofile = "";
-
-		// initialize string to search and assign its value to console argument
-		char *strToFind = (char*)malloc(sizeof(char) * LINE_SIZE);
-		strToFind = argv[1];
 		
-		int case_ignore; // 1 - case ignore, everything else - case specific
+		strToFind = argv[1];		
 		
 		// loop through the arguments and do the checks as specified
 		for(int i = 0; i < argc; i++)
@@ -82,15 +85,19 @@ int main(int argc, char **argv)
 
 		/* Free Heap of allocated memory * !!! VERY IMPORTANT as Kevin says :) !!! * ELSE -> We definitely get a MEMORY LEAK */
 		Files_Destroy(filez);
-		// ------
 		ifile = 0;
-		free(ifile);
 		ofile = 0;
-		free(ofile);
 		strToFind = 0;
-		free(strToFind);
 	}
 
+	// free 'em all
+	if(ifile != 0) printf("This particular pointer still in use");
+	else free(ifile);
+	if(ofile != 0) printf("This particular pointer still in use");
+	else free(ofile);
+	if(strToFind != 0) printf("This particular pointer still in use");
+	else free(strToFind);
+	
     // cuz' design matters (:
     printf("\n");
 	

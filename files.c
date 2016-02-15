@@ -29,6 +29,7 @@ void Files_Destroy(struct Files *m_File)
 void Close(FILE *fh)
 {	
 	fclose(fh);
+	fh = 0;
 }
 
 // Read from stdin
@@ -58,10 +59,9 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 {
 	// Read the file line by line (untill it reaches max chars for line_size)	
 	
-	// These are statics cuz' I don't plan on using them outside this scope (:
-	static int line_num = 1;
-	static int find_result = 0;	
-	static int is_saved = 0;
+	int line_num = 1;
+	int find_result = 0;	
+	int is_saved = 0;
 	
 	
 	printf("-----------------------------\n");
@@ -155,19 +155,15 @@ void Operate_Files_Actions(struct Files *m_File, char *word)
 	// Ok, that's not a legit second part of the above comment.
 	// Do free the memory allocated for every file's line and that for the string we are searching for!
 	free(line);
-	line = 0;
 	free(str);
+	
+	// Get rid of dangling pointers... :D
+	line = 0;
 	str = 0;
 	
-	// Check if any of the files is still opened -> CLOSE
+	// Check if any of the files is still opened -> CLOSE();
 	if(ifh)
-	{
 		Close(ifh);
-		ifh = 0;
-	}
 	if(ofh)
-	{
 		Close(ofh);
-		ofh = 0;
-	}
 }
