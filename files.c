@@ -43,7 +43,7 @@ void Read_Std(char *line, size_t sz)
 void Write_Std(char *line)
 {
 	printf("\nSuch output source doesn't exist. Sorry mate. :)\nWe will try to handle this situation in a few.\n");
-	printf("\nBut hey, that's your outcome, pal: %s", line);
+	printf("\nBut hey, that's your outcome, pal: %s\n", line);
 	printf("-----------------------------\n");
 }
 
@@ -59,9 +59,9 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 {
 	// Read the file line by line (untill it reaches max chars for line_size)	
 	
-	int line_num = 1;
-	int find_result = 0;	
-	int is_saved = 0;
+	int line_num = 1; // return the number of the line where a string is found
+	int find_result = 0; // return the amount of results found for the searched string
+	int is_saved = 0; // used as a bool... if is_saved = 1 -> inform via printing to stdout
 	
 	
 	printf("-----------------------------\n");
@@ -74,13 +74,43 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 	{
 		while(fgets(line, m_File->line_size, ifh) != NULL)
 		{
+			// this is just a result of strstr (the function returns a char pointer)
+			char *strings_equal = (char*)malloc(m_File->line_size);
+			strings_equal = NULL;
+			
 			// that integer we use as boolean by the way cuz' I don't wanna botter including additional lib for that...
 			// if it equals 1 it means we wanna ignore any type of case differences -> so we just set them all to lower case
 			// otherwise we Do care!
-			line = (case_ignore == 1) ? strlwr(line) : line;
-			word = (case_ignore == 1) ? strlwr(word) : word;
+			if(case_ignore == 1)
+			{
+				char *tempLine = (char*)malloc(m_File->line_size);
+				char *tempWord = (char*)malloc(m_File->line_size);
+
+				// making deep copies of the pointer objects line(file line) and word(search string)
+				for(int i = 0; i < m_File->line_size; i++)
+				{
+					tempLine[i] = line[i];
+					tempWord[i] = word[i];
+				}
+				
+				// setting them to lower case so I can easily compare them without worrying about case sensitivy
+				tempLine = strlwr(tempLine);
+				tempWord = strlwr(tempWord);
+				
+				// setting its value to lowercased line and word
+				strings_equal = strstr(tempLine, tempWord);
+				
+				// Freeing the memory allocated for the temps and setting them to null/0
+				free(tempLine);
+				free(tempWord);
+				tempLine = 0;
+				tempWord = 0;
+			}
+			else 
+				strings_equal = strstr(line, word);	// unchanged/original values
+			
 			// compare file lines with the string we've entered
-			if(strstr(line, word) != NULL) 
+			if(strings_equal != NULL) 
 			{
 				printf("A match for the string \"%s\" was found on line %d\nHere's it: %s\n", word, line_num, line);
 				
@@ -97,7 +127,7 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 				find_result++;
 			}
 			// increment the line number so we continue with the search until the END. (:
-			line_num++;		
+			line_num++;
 		}
 		
 		// Just for design matters and informativity(if such word exists :D)
@@ -156,7 +186,6 @@ void Operate_Files_Actions(struct Files *m_File, char *word)
 	// Do free the memory allocated for every file's line and that for the string we are searching for!
 	free(line);
 	free(str);
-	
 	// Get rid of dangling pointers... :D
 	line = 0;
 	str = 0;
