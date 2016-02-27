@@ -26,6 +26,42 @@ int main(int argc, char **argv)
 	// 1 - case ignore, everything else - case specific
 	int case_ignore;
 	
+	// Initialising the allowed file formats you'll be able to read from and write to (:
+	char **formats = (char**)malloc(sizeof(char*) * 256);
+	
+	// allocate memory for each of the objects in it
+	for(int c = 0; c < 255; ++c)
+	{
+		formats[c] = (char*)malloc(sizeof(char) * 10);
+	}
+	
+	formats[0] = ".txt";
+	formats[1] = ".dat";
+	formats[2] = ".db";
+	formats[3] = ".log";
+	formats[4] = ".csv";
+	formats[5] = ".tsv";
+	formats[6] = ".doc";
+	formats[7] = ".docx";
+	formats[8] = ".xls";
+	formats[9] = ".xlsx";
+	formats[10] = ".c";
+	formats[11] = ".cpp";
+	formats[12] = ".java";
+	formats[13] = ".class";
+	formats[14] = ".php";
+	formats[15] = ".js";
+	formats[16] = ".html";
+	formats[17] = ".htm";
+	formats[18] = ".css";
+	formats[19] = ".less";
+	formats[20] = ".sql";
+	formats[21] = ".file";
+	formats[22] = ".georgi";
+	
+	// , ".doc", ".docx", ".xls", ".c", ".cpp", ".java", ".class", ".georgi"
+	char *formatChecker = (char*)malloc(sizeof(char) * 10);
+	
 	// Playin' around with args size in order to achieve full functionality and informativity of the program
 	if(argc < 2)
 	{
@@ -48,15 +84,23 @@ int main(int argc, char **argv)
 		{
 			// finds the occurrence of the -i arg in the whole args line. '\0' chars -not compared
 			if(strstr(argv[i], "-i") != NULL)
-			{
+			{				
 				if(argv[i+1])
 				{
-					// a comfy one-liner to check for input filename
-					ifile = (strstr(argv[i+1],".txt") != NULL) ? argv[i+1] : "";
+					for(int count = 0; count < 255; ++count) 
+					{
+						if(strstr(argv[i+1], formats[count]) != NULL)
+							formatChecker = formats[count];
+					}
+					
+					// a comfy one-liner to check the input filename
+					ifile = (strstr(argv[i+1], formatChecker) != NULL) ? argv[i+1] : "";
 				}
 				else
 					// if not -> assign empty string
 					ifile = argv[i+1] = "";
+					
+				printf("IFILE = %s\n", ifile);
 			}
 			
 			// finds the occurrence of the -o arg in the whole args line. '\0' chars -not compared
@@ -64,12 +108,20 @@ int main(int argc, char **argv)
 			{			
 				if(argv[i+1])
 				{
+					for(int count = 0; count < 255; ++count) 
+					{
+						if(strstr(argv[i+1], formats[count]) != NULL)
+							formatChecker = formats[count];
+					}
+					
 					// a comfy one-liner to check for output filename
-					ofile = (strstr(argv[i+1],".txt") != NULL) ? argv[i+1] : "";
+					ofile = (strstr(argv[i+1], formatChecker) != NULL) ? argv[i+1] : "";
 				}
 				else
 					// if not -> assign empty string
 					ofile = argv[i+1] = "";
+					
+				printf("OFILE = %s\n", ofile);
 			}
 			
 			// finds the occurrence of the -c arg in the whole args line. '\0' chars -not compared
@@ -90,8 +142,9 @@ int main(int argc, char **argv)
 		ifile = 0;
 		ofile = 0;
 		strToFind = 0;
+		formatChecker = 0;
 	}
-
+	
 	// free 'em all
 	if(ifile != 0) printf("This particular pointer still in use");
 	else free(ifile);
@@ -99,6 +152,17 @@ int main(int argc, char **argv)
 	else free(ofile);
 	if(strToFind != 0) printf("This particular pointer still in use");
 	else free(strToFind);
+	if(formatChecker != 0) printf("This particular pointer still in use");
+	else free(formatChecker);
+	
+	// free the 2D array storing our formats
+	for(int k = 0; k < 255; ++k)
+	{
+		formats[k] = 0;
+		free(formats[k]);
+	}
+	free(formats);
+	formats = 0;
 	
     // cuz' design matters (:
     printf("\n");

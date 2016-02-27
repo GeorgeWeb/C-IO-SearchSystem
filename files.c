@@ -110,7 +110,7 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 				strings_equal = strstr(line, word);	// unchanged/original values
 			
 			// compare file lines with the string we've entered
-			if(strings_equal != NULL) 
+			if(strings_equal != NULL)
 			{
 				printf("A match for the string \"%s\" was found on line %d\nHere's it: %s\n", word, line_num, line);
 				
@@ -146,7 +146,10 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 		{
 			printf("Such input source doesn't exist. Sorry mate. :)\nBut you can enter now what you wanna add in the output source.\n");
 			Read_Std(str, str_size);
-			Write_File(ofh, str);
+			if(strstr(str, word) != NULL)
+				Write_File(ofh, str);
+			else
+				printf("\This isn't the right word, pal.\nI mean, it isn't the one you've searched for just a few ago.. :/");
 			is_saved = 1;
 		}
 		// Read from stdin AND write to stdout
@@ -154,7 +157,10 @@ void Search_File(FILE *ifh, FILE *ofh, struct Files *m_File, char *line, char *w
 		{
 			printf("Neither the input nor the output source exist. Sorry mate. :)\nBut you can type what you wanna display.\n");
 			Read_Std(str, str_size);
-			Write_Std(str);
+			if(strstr(str, word) != NULL)
+				Write_Std(str);
+			else
+				printf("\This isn't the right word, pal.\nI mean, it isn't the one you've searched for just a few ago.. :/");
 		}
 	}
 	
